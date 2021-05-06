@@ -1,9 +1,5 @@
 package com.github.sardine;
 
-import com.github.sardine.report.SardineReport;
-import org.w3c.dom.Element;
-
-import javax.xml.namespace.QName;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +7,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.xml.namespace.QName;
+
+import com.github.sardine.report.SardineReport;
+import org.w3c.dom.Element;
 
 /**
  * The main interface for Sardine operations.
@@ -25,7 +25,7 @@ public interface Sardine
 	 * @param username Use in authentication header credentials
 	 * @param password Use in authentication header credentials
 	 */
-	void setCredentials(String username, String password);
+	void setCredentials(String username, char[] password);
 
 	/**
 	 * @param username	Use in authentication header credentials
@@ -33,7 +33,7 @@ public interface Sardine
 	 * @param domain	  NTLM authentication
 	 * @param workstation NTLM authentication
 	 */
-	void setCredentials(String username, String password, String domain, String workstation);
+	void setCredentials(String username, char[] password, String domain, String workstation);
 
 	/**
 	 * @see #list(String)
@@ -249,10 +249,11 @@ public interface Sardine
 	 *
 	 * @param url		Path to the resource including protocol and hostname (must not point to a directory)
 	 * @param dataStream Input source
+	 * @param contentType	MIME type to add to the HTTP request header
 	 * @param headers	Additional HTTP headers to add to the request
 	 * @throws IOException I/O error or HTTP response validation failure
 	 */
-	void put(String url, InputStream dataStream, Map<String, String> headers) throws IOException;
+	void put(String url, InputStream dataStream, String contentType, Map<String, String> headers) throws IOException;
 
 	/**
 	 * Uses <code>PUT</code> to upload file to a server with specific contentType.

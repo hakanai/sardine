@@ -16,14 +16,16 @@
 
 package com.github.sardine.impl.handler;
 
-import org.apache.http.HttpHeaders;
-import org.apache.http.HttpResponse;
-
 import java.io.IOException;
 
-public class ETagResponseHandler extends ValidatingResponseHandler<String> {
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.HttpHeaders;
+
+public class ETagResponseHandler extends ValidatingResponseHandler<String>
+{
     @Override
-    public String handleResponse(HttpResponse response) throws IOException {
+    public String handleResponse(ClassicHttpResponse response) throws IOException
+    {
         this.validateResponse(response);
         if(response.containsHeader(HttpHeaders.ETAG)) {
             return response.getFirstHeader(HttpHeaders.ETAG).getValue();

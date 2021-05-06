@@ -16,24 +16,24 @@
 
 package com.github.sardine.impl.handler;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
+import java.io.IOException;
 
 import com.github.sardine.impl.SardineException;
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.HttpStatus;
+import org.apache.hc.core5.http.io.HttpClientResponseHandler;
 
 /**
- * {@link org.apache.http.client.ResponseHandler} which checks whether a given resource exists.
+ * {@link HttpClientResponseHandler} which checks whether a given resource exists.
  *
  * @author mirko
  */
 public class ExistsResponseHandler extends ValidatingResponseHandler<Boolean>
 {
 	@Override
-	public Boolean handleResponse(HttpResponse response) throws SardineException
+	public Boolean handleResponse(ClassicHttpResponse response) throws IOException
 	{
-		StatusLine statusLine = response.getStatusLine();
-		int statusCode = statusLine.getStatusCode();
+		int statusCode = response.getCode();
 		if (statusCode < HttpStatus.SC_MULTIPLE_CHOICES)
 		{
 			return true;
@@ -42,6 +42,6 @@ public class ExistsResponseHandler extends ValidatingResponseHandler<Boolean>
 		{
 			return false;
 		}
-		throw new SardineException("Unexpected response", statusCode, statusLine.getReasonPhrase());
+		throw new SardineException("Unexpected response", statusCode, response.getReasonPhrase());
 	}
 }

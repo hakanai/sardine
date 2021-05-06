@@ -16,26 +16,26 @@
 
 package com.github.sardine.impl.io;
 
-import org.apache.http.HttpConnection;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.CloseableHttpResponse;
-
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.HttpConnection;
 
 public class HttpMethodReleaseInputStream extends ByteCountInputStream
 {
 	private static final Logger log = Logger.getLogger(HttpMethodReleaseInputStream.class.getName());
 
-	private HttpResponse response;
+	private ClassicHttpResponse response;
 
 	/**
 	 * @param response The HTTP response to read from
 	 * @throws IOException          If there is a problem reading from the response
 	 * @throws NullPointerException If the response has no message entity
 	 */
-	public HttpMethodReleaseInputStream(final HttpResponse response) throws IOException
+	public HttpMethodReleaseInputStream(final ClassicHttpResponse response) throws IOException
 	{
 		super(response.getEntity().getContent());
 		this.response = response;
@@ -46,7 +46,7 @@ public class HttpMethodReleaseInputStream extends ByteCountInputStream
 	 *
 	 * @throws IOException if an I/O error occurs
 	 * @see CloseableHttpResponse#close()
-	 * @see HttpConnection#shutdown()
+	 * @see HttpConnection#close()
 	 */
 	@Override
 	public void close() throws IOException
@@ -70,7 +70,7 @@ public class HttpMethodReleaseInputStream extends ByteCountInputStream
 				// response data unnecessarily though at the expense of making underlying
 				// connections unavailable for reuse.
 				// The response proxy will force close the connection.
-				((CloseableHttpResponse) response).close();
+				response.close();
 			}
 		}
 		else

@@ -16,13 +16,14 @@
 
 package com.github.sardine.impl.methods;
 
+import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import java.net.URI;
 
 /**
  */
-public class HttpLock extends HttpEntityEnclosingRequestBase
+public class HttpLock extends HttpUriRequestBase
 {
 	public static final String METHOD_NAME = "LOCK";
 

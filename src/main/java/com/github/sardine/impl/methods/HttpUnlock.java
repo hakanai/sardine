@@ -18,12 +18,12 @@ package com.github.sardine.impl.methods;
 
 import java.net.URI;
 
-import org.apache.http.HttpHeaders;
-import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
+import org.apache.hc.core5.http.HttpHeaders;
 
 /**
  */
-public class HttpUnlock extends HttpRequestBase
+public class HttpUnlock extends HttpUriRequestBase
 {
 	public static final String METHOD_NAME = "UNLOCK";
 
@@ -46,7 +46,8 @@ public class HttpUnlock extends HttpRequestBase
 	 */
 	public HttpUnlock(URI url, String token)
 	{
-		this.setURI(url);
+		super(METHOD_NAME, url);
+
 		this.setHeader(HttpHeaders.CONTENT_TYPE, "text/xml; charset=utf-8");
 		this.setHeader("Lock-Token", "<" + token + ">");
 	}

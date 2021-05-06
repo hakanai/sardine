@@ -16,40 +16,39 @@
 
 package com.github.sardine.impl.handler;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import com.github.sardine.impl.SardineException;
 import com.github.sardine.model.Prop;
 import com.github.sardine.util.SardineUtil;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-
-import java.io.IOException;
-import java.io.InputStream;
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.HttpEntity;
 
 /**
  */
 public class LockResponseHandler extends ValidatingResponseHandler<String>
 {
 	@Override
-	public String handleResponse(HttpResponse response) throws IOException
+	public String handleResponse(ClassicHttpResponse response) throws IOException
 	{
 		super.validateResponse(response);
 
 		// Process the response from the server.
 		HttpEntity entity = response.getEntity();
-        StatusLine statusLine = response.getStatusLine();
 		if (entity == null)
 		{
-			throw new SardineException("No entity found in response", statusLine.getStatusCode(),
-					statusLine.getReasonPhrase());
+			throw new SardineException("No entity found in response", response.getCode(),
+					response.getReasonPhrase());
 		}
         try
         {
     		return this.getToken(entity.getContent());
         }
-        catch(IOException e) {
+        catch (IOException e)
+		{
             // JAXB error unmarshalling response stream
-            throw new SardineException(e.getMessage(), statusLine.getStatusCode(), statusLine.getReasonPhrase());
+            throw new SardineException(e.getMessage(), response.getCode(), response.getReasonPhrase());
         }
 	}
 

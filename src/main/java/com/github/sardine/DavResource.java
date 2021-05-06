@@ -7,35 +7,19 @@
 
 package com.github.sardine;
 
-import com.github.sardine.model.Creationdate;
-import com.github.sardine.model.Displayname;
-import com.github.sardine.model.Getcontentlanguage;
-import com.github.sardine.model.Getcontentlength;
-import com.github.sardine.model.Getcontenttype;
-import com.github.sardine.model.Getetag;
-import com.github.sardine.model.Getlastmodified;
-import com.github.sardine.model.Propstat;
-import com.github.sardine.model.Report;
-import com.github.sardine.model.Resourcetype;
-import com.github.sardine.model.Response;
-import com.github.sardine.model.SupportedReport;
-import com.github.sardine.model.SupportedReportSet;
-import com.github.sardine.util.SardineUtil;
-import org.apache.http.HttpStatus;
-import org.apache.http.ParseException;
-import org.apache.http.message.BasicLineParser;
-import org.w3c.dom.Element;
-
-import javax.xml.namespace.QName;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
+import javax.xml.namespace.QName;
+
+import com.github.sardine.model.*;
+import com.github.sardine.util.SardineUtil;
+import org.apache.hc.core5.http.HttpStatus;
+import org.apache.hc.core5.http.ParseException;
+import org.apache.hc.core5.http.message.BasicLineParser;
+import org.apache.hc.core5.util.CharArrayBuffer;
+import org.w3c.dom.Element;
 
 /**
  * Describes a resource on a remote server. This could be a directory or an actual file.
@@ -167,7 +151,9 @@ public class DavResource
 		}
 		try
 		{
-			return BasicLineParser.parseStatusLine(response.getStatus(), null).getStatusCode();
+			CharArrayBuffer buffer = new CharArrayBuffer(response.getStatus().length());
+			buffer.append(response.getStatus());
+			return new BasicLineParser().parseStatusLine(buffer).getStatusCode();
 		}
 		catch (ParseException e)
 		{

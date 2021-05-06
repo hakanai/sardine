@@ -18,14 +18,13 @@ package com.github.sardine.impl;
 
 import com.github.sardine.impl.methods.HttpPropFind;
 import com.github.sardine.impl.methods.HttpReport;
+import org.apache.hc.client5.http.classic.methods.HttpUriRequest;
+import org.apache.hc.client5.http.impl.DefaultRedirectStrategy;
+import org.apache.hc.core5.http.*;
+import org.apache.hc.core5.http.protocol.HttpContext;
 import org.apache.http.Header;
-import org.apache.http.HttpEntityEnclosingRequest;
-import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.ProtocolException;
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.DefaultRedirectStrategy;
 import org.apache.http.protocol.HttpContext;
 
 public class SardineRedirectStrategy extends DefaultRedirectStrategy {
@@ -41,7 +40,7 @@ public class SardineRedirectStrategy extends DefaultRedirectStrategy {
 
     @Override
     public HttpUriRequest getRedirect(HttpRequest request, HttpResponse response, HttpContext context)
-            throws ProtocolException
+            throws HttpException
     {
         String method = request.getRequestLine().getMethod();
         if (method.equalsIgnoreCase(HttpPropFind.METHOD_NAME))
@@ -67,10 +66,11 @@ public class SardineRedirectStrategy extends DefaultRedirectStrategy {
         return super.getRedirect(request, response, context);
     }
 
-    private HttpUriRequest copyEntity(final HttpEntityEnclosingRequestBase redirect, final HttpRequest original) {
-        if (original instanceof HttpEntityEnclosingRequest)
+    private HttpUriRequest copyEntity(final HttpUriRequest redirect, final HttpRequest original)
+    {
+        if (original instanceof HttpEntityContainer)
         {
-            redirect.setEntity(((HttpEntityEnclosingRequest) original).getEntity());
+            redirect.setEntity(((HttpEntityContainer) original).getEntity());
         }
         return redirect;
     }

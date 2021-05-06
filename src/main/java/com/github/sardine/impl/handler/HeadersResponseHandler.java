@@ -16,19 +16,19 @@
 
 package com.github.sardine.impl.handler;
 
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.Header;
+
 public class HeadersResponseHandler extends ValidatingResponseHandler<Map<String, String>> {
     @Override
-    public Map<String, String> handleResponse(HttpResponse response) throws IOException {
+    public Map<String, String> handleResponse(ClassicHttpResponse response) throws IOException {
         this.validateResponse(response);
         Map<String, String> headers = new HashMap<String, String>();
-        for(Header h : response.getAllHeaders()) {
+        for (Header h : response.getHeaders()) {
             headers.put(h.getName(), h.getValue());
         }
         return headers;

@@ -16,18 +16,18 @@
 
 package com.github.sardine.impl.handler;
 
-import com.github.sardine.impl.SardineException;
-import com.github.sardine.model.Multistatus;
-import com.github.sardine.util.SardineUtil;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.github.sardine.impl.SardineException;
+import com.github.sardine.model.Multistatus;
+import com.github.sardine.util.SardineUtil;
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.io.HttpClientResponseHandler;
+
 /**
- * {@link org.apache.http.client.ResponseHandler} which returns the {@link Multistatus} response of
+ * {@link HttpClientResponseHandler} which returns the {@link Multistatus} response of
  * a {@link com.github.sardine.impl.methods.HttpPropFind} request.
  *
  * @author mirko
@@ -35,17 +35,16 @@ import java.io.InputStream;
 public class MultiStatusResponseHandler extends ValidatingResponseHandler<Multistatus>
 {
 	@Override
-	public Multistatus handleResponse(HttpResponse response) throws IOException
+	public Multistatus handleResponse(ClassicHttpResponse response) throws IOException
 	{
 		super.validateResponse(response);
 
 		// Process the response from the server.
 		HttpEntity entity = response.getEntity();
-		StatusLine statusLine = response.getStatusLine();
 		if (entity == null)
 		{
-			throw new SardineException("No entity found in response", statusLine.getStatusCode(),
-                    statusLine.getReasonPhrase());
+			throw new SardineException("No entity found in response", response.getCode(),
+					response.getReasonPhrase());
         }
         try
         {
@@ -53,7 +52,7 @@ public class MultiStatusResponseHandler extends ValidatingResponseHandler<Multis
         }
         catch(IOException e) {
             // JAXB error unmarshalling response stream
-            throw new SardineException(e.getMessage(), statusLine.getStatusCode(), statusLine.getReasonPhrase());
+            throw new SardineException(e.getMessage(), response.getCode(), response.getReasonPhrase());
         }
 	}
 

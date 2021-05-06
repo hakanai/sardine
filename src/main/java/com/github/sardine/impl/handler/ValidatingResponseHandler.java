@@ -17,34 +17,32 @@
 package com.github.sardine.impl.handler;
 
 import com.github.sardine.impl.SardineException;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ResponseHandler;
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.HttpStatus;
+import org.apache.hc.core5.http.io.HttpClientResponseHandler;
 
 /**
  * Basic response handler which takes an url for documentation.
  *
- * @param <T> return type of {@link ResponseHandler#handleResponse(HttpResponse)}.
+ * @param <T> return type of {@link HttpClientResponseHandler#handleResponse(ClassicHttpResponse)}.
  * @author mirko
  */
-public abstract class ValidatingResponseHandler<T> implements ResponseHandler<T>
+public abstract class ValidatingResponseHandler<T> implements HttpClientResponseHandler<T>
 {
 	/**
 	 * Checks the response for a statuscode between {@link HttpStatus#SC_OK} and {@link HttpStatus#SC_MULTIPLE_CHOICES}
-	 * and throws an {@link com.github.sardine.impl.SardineException} otherwise.
+	 * and throws a {@link com.github.sardine.impl.SardineException} otherwise.
 	 *
 	 * @param response to check
 	 * @throws SardineException when the status code is not acceptable.
 	 */
-	protected void validateResponse(HttpResponse response) throws SardineException
+	protected void validateResponse(ClassicHttpResponse response) throws SardineException
 	{
-		StatusLine statusLine = response.getStatusLine();
-		int statusCode = statusLine.getStatusCode();
+		int statusCode = response.getCode();
 		if (statusCode >= HttpStatus.SC_OK && statusCode < HttpStatus.SC_MULTIPLE_CHOICES)
 		{
 			return;
 		}
-		throw new SardineException("Unexpected response", statusLine.getStatusCode(), statusLine.getReasonPhrase());
+		throw new SardineException("Unexpected response", response.getCode(), response.getReasonPhrase());
 	}
 }
