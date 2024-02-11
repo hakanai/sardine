@@ -1,0 +1,167 @@
+repo_name: hakanai/sardine
+report_id: a1710feff874b6698f8150b7c7a95e26
+version: 0.1
+repo_type: Public
+timestamp: '2024-02-11T01:35:08+00:00'
+requested_by: lookfirst
+provider: github
+branch: master
+detected_tools_count: 11
+tools:
+- name: Java
+  description: A concurrent, class-based, object-oriented, language specifically designed
+    to have as few implementation dependencies as possible
+  website_url: https://www.java.com
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/995/K85ZWV2F.png
+  detection_source_url: https://github.com/hakanai/sardine
+  detection_source: Repo Metadata
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/hakanai/sardine
+  detection_source: Repo Metadata
+- name: JUnit
+  description: A programmer-oriented testing framework for Java
+  website_url: http://junit.org/
+  version: 4.13.1
+  license: EPL-1.0
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Testing Frameworks
+  image_url: https://img.stackshare.io/service/2020/874086.png
+  detection_source_url: https://github.com/hakanai/sardine/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: Jon Stevens
+  last_updated_on: 2013-04-18 23:05:11.000000000 Z
+- name: Mockito
+  description: Tasty mocking framework for unit tests in Java
+  website_url: https://site.mockito.org/
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Testing Frameworks
+  image_url: https://img.stackshare.io/service/2021/4y634TJm_400x400.jpg
+  detection_source_url: https://github.com/hakanai/sardine/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: David Kocher
+  last_updated_on: 2015-06-02 12:08:14.000000000 Z
+- name: Travis CI
+  description: A hosted continuous integration service for open source and private
+    projects
+  website_url: http://travis-ci.com/
+  open_source: false
+  hosted_saas: true
+  category: Build, Test, Deploy
+  sub_category: Continuous Integration
+  image_url: https://img.stackshare.io/service/460/Lu6cGu0z_400x400.png
+  detection_source_url: https://github.com/hakanai/sardine/blob/master/.travis.yml
+  detection_source: ".travis.yml"
+  last_updated_by: Jon Stevens
+  last_updated_on: 2014-01-07 23:05:41.000000000 Z
+- name: Shell
+  description: A shell is a text-based terminal, used for manipulating programs and
+    files. Shell scripts typically manage program execution.
+  website_url: https://en.wikipedia.org/wiki/Shell_script
+  open_source: false
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/4631/default_c2062d40130562bdc836c13dbca02d318205a962.png
+  detection_source_url: https://github.com/hakanai/sardine
+  detection_source: Repo Metadata
+- name: junit:junit
+  description: JUnit is a unit testing framework for Java
+  version: 4.13.1
+  license: EPL-1.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hakanai/sardine/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: David Kocher
+  last_updated_on: 2015-06-02 12:08:14.000000000 Z
+- name: org.apache.ant:ant
+  description: Master POM
+  version: 1.10.9
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hakanai/sardine/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: Daniel Bär
+  last_updated_on: 2020-02-27 08:08:12.000000000 Z
+  vulnerabilities:
+  - name: Improper Handling of Length Parameter Inconsistency in Apache Ant
+    cve_id: CVE-2021-36373
+    cve_url: https://github.com/advisories/GHSA-q5r4-cfpx-h6fh
+    detected_date: Aug 22
+    severity: moderate
+    first_patched: 1.10.11
+  - name: Improper Handling of Length Parameter Inconsistency in Apache Ant
+    cve_id: CVE-2021-36374
+    cve_url: https://github.com/advisories/GHSA-5v34-g2px-j4fw
+    detected_date: Aug 22
+    severity: moderate
+    first_patched: 1.10.11
+- name: org.apache.httpcomponents:httpclient
+  description: Apache HttpComponents Client
+  version: 4.5.1
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hakanai/sardine/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: Daniel Bär
+  last_updated_on: 2020-02-27 08:08:12.000000000 Z
+  vulnerabilities:
+  - name: Cross-site scripting in Apache HttpClient
+    cve_id: CVE-2020-13956
+    cve_url: https://github.com/advisories/GHSA-7r82-7xv7-xcpj
+    detected_date: Aug 22
+    severity: moderate
+    first_patched: 4.5.13
+- name: org.glassfish.jaxb:jaxb-runtime
+  description: JAXB
+  version: 2.3.2
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hakanai/sardine/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: Daniel Bär
+  last_updated_on: 2020-02-27 08:08:12.000000000 Z
+- name: org.mockito:mockito-all
+  description: Mock objects library for java
+  version: 1.10.19
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hakanai/sardine/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: Daniel Bär
+  last_updated_on: 2020-02-27 08:08:12.000000000 Z
